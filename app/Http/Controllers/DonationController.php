@@ -14,19 +14,16 @@ class DonationController extends Controller
     }
 
     public function notification(Request $request) {
-    // Untuk ngetes apakah koneksi masuk
     \Log::info("Notifikasi masuk dari Midtrans!");
     return response()->json(['status' => 'ok']);
 }
 
     public function store(Request $request) {
-        // Konfigurasi Midtrans
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$isProduction = false;
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
-        // Simpan data ke database
         $donation = Donation::create([
             'order_id' => 'DONASI-' . uniqid(),
             'bencana' => $request->bencana,
@@ -34,7 +31,6 @@ class DonationController extends Controller
             'nominal' => $request->nominal,
         ]);
 
-        // Buat parameter Midtrans
         $params = [
     'transaction_details' => [
         'order_id' => $donation->order_id,
@@ -45,7 +41,7 @@ class DonationController extends Controller
             'id' => 'bencana-001',
             'price' => $donation->nominal,
             'quantity' => 1,
-            'name' => 'Donasi Peduli ' . $request->bencana, // Ini akan muncul di rincian
+            'name' => 'Donasi Peduli ' . $request->bencana, 
         ]
     ],
     'customer_details' => [

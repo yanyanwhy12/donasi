@@ -9,9 +9,6 @@ class Donation extends Model
 {
     use HasFactory;
 
-    /**
-     * Kolom yang boleh diisi (Mass Assignment)
-     */
     protected $fillable = [
         'order_id', 
         'bencana', 
@@ -21,17 +18,12 @@ class Donation extends Model
         'snap_token'
     ];
 
-    /**
-     * Default nilai untuk kolom tertentu
-     */
+
     protected $attributes = [
         'status' => 'pending',
     ];
 
-    /**
-     * Casting tipe data
-     * Ini memastikan 'nominal' selalu terbaca sebagai angka (integer) di Laravel
-     */
+
     protected $casts = [
         'nominal' => 'integer',
     ];
